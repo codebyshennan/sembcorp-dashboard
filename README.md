@@ -1,16 +1,32 @@
-# Prisma + tRPC
+# Meteorological Data Visualization 
 
-## Features
+## Goal
 
-- 🧙‍♂️ E2E typesafety with [tRPC](https://trpc.io)
-- ⚡ Full-stack React with Next.js
-- ⚡ Database with Prisma
-- ⚙️ VSCode extensions
-- 🎨 ESLint + Prettier
-- 💚 CI setup using GitHub Actions:
-  - ✅ E2E testing with [Playwright](https://playwright.dev/)
-  - ✅ Linting
-- 🔐 Validates your env vars on build and start
+The goal of this exercise is to create an application which can display the data in the following chart formats.
+
+- A column chart for relative humidity (`relativehumidity_2m`)
+
+- A line chart for temperature min and temperature max (`temperature_2m_max`, `temperature_2m_min`)
+
+- An area chart for direct radiation (direct_radiation)
+The application should be written in Angular (Preferred) OR React with Typescript.
+
+## Requirements
+
+- Retrieve data from API: [Open Meteorology](https://api.open-meteo.com/v1/forecast?latitude=1.29&longitude=103.85&hourly=relativehumidity_2m,direct_radiation&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FSingapore&start_date=2023-01-01&end_date=2023-01-10)
+
+- Single page application (SPA)
+
+- Shows all 3 types of charts
+
+- Simple dashboard look and feel
+Feel free to use any libraries required.
+
+* Bonus if you can:
+
+- Store the data in a local SQL database and read from the database in the absence of internet access.
+
+- Responsive design (Works on both desktop and mobile view)
 
 ## Setup
 
@@ -21,7 +37,7 @@ pnpm
 pnpm dx
 ```
 
-### Requirements
+## Setup Requirements
 
 - Node >= 14
 - Postgres
@@ -58,31 +74,4 @@ The project contains a [`render.yaml`](./render.yaml) [_"Blueprint"_](https://re
 
 Go to [dashboard.render.com/blueprints](https://dashboard.render.com/blueprints) and connect to this Blueprint and see how the app and database automatically gets deployed.
 
-## Files of note
-
-<table>
-  <thead>
-    <tr>
-      <th>Path</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="./prisma/schema.prisma"><code>./prisma/schema.prisma</code></a></td>
-      <td>Prisma schema</td>
-    </tr>
-    <tr>
-      <td><a href="./src/pages/api/trpc/[trpc].ts"><code>./src/pages/api/trpc/[trpc].ts</code></a></td>
-      <td>tRPC response handler</td>
-    </tr>
-    <tr>
-      <td><a href="./src/server/routers"><code>./src/server/routers</code></a></td>
-      <td>Your app's different tRPC-routers</td>
-    </tr>
-  </tbody>
-</table>
-
----
-
-Created by [@alexdotjs](https://twitter.com/alexdotjs).
+Template by [@alexdotjs](https://twitter.com/alexdotjs).
