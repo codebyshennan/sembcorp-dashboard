@@ -3,30 +3,10 @@
   "version": "10.21.1",
   "private": true,
   "scripts": {
-    "generate": "prisma generate",
-    "prisma-studio": "prisma studio",
-    "db-seed": "prisma db seed",
-    "db-reset": "prisma migrate dev reset",
-    "dx:next": "run-s migrate-dev db-seed && next dev",
-    "dx:prisma-studio": "pnpm prisma-studio",
-    "dx": "run-p dx:* --print-label",
-    "dev": "pnpm dx:next",
-    "prebuild": "run-s generate migrate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --cache --ext \".js,.ts,.tsx\" --report-unused-disable-directives --report-unused-disable-directives src",
-    "lint-fix": "pnpm lint --fix",
-    "migrate-dev": "prisma migrate dev",
-    "migrate": "prisma migrate deploy",
-    "test": "run-s test:*",
-    "test:unit": "vitest run",
-    "test:e2e": "playwright test",
-    "test-dev": "start-server-and-test dev http://127.0.0.1:3000 test",
-    "test-start": "start-server-and-test start http://127.0.0.1:3000 test",
-    "postinstall": "pnpm generate"
-  },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "lint-fix": "pnpm lint --fix"
   },
   "prettier": {
     "printWidth": 80,
