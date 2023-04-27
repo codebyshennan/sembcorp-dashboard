@@ -7,8 +7,9 @@ import {
   BarChart,
   Bar,
 } from 'recharts';
+import { HourlyMeteoData } from '~/hooks/useLocation';
 
-const MeteoHumidityChart = ({ data, xKey }) => {
+const MeteoHumidityChart = ({ data }: { data: HourlyMeteoData[] }) => {
   return (
     // <ResponsiveContainer width="100%" height="100%">
     <>
@@ -25,7 +26,7 @@ const MeteoHumidityChart = ({ data, xKey }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={xKey} />
+        <XAxis dataKey="time" />
         <YAxis />
         <Tooltip />
         <Legend />

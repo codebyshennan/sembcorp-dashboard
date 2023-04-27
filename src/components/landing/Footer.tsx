@@ -8,7 +8,7 @@ const LandingPageFooter = () => {
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhnlg4_T3qowHYxaZkRgAv80zigg6JZkC90XWIxDsu1g&s"
                 className="mr-3 h-8"
-                alt="FlowBite Logo"
+                alt="Logo"
               />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                 SembCorp Meteorological Services

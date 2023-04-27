@@ -1,17 +1,15 @@
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
   AreaChart,
   Area,
 } from 'recharts';
+import { HourlyMeteoData } from '~/hooks/useLocation';
 
-const MeteoRadiationChart = ({ data, xKey }) => {
+const MeteoRadiationChart = ({ data }: { data: HourlyMeteoData[] }) => {
   return (
     // <ResponsiveContainer width="100%" height="100%">
     <>
@@ -28,7 +26,7 @@ const MeteoRadiationChart = ({ data, xKey }) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey={xKey} interval="preserveStartEnd" />
+        <XAxis dataKey="time" interval="preserveStartEnd" />
         <YAxis />
         <Tooltip />
         <Legend />

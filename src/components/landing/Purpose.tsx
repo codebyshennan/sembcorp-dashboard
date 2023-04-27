@@ -13,13 +13,13 @@ const LandingPagePurpose = () => {
             data.
           </p>
           <p className="mb-4 font-medium">
-            By providing real-time data and insights, we're helping our clients
-            make better-informed decisions, optimize their operations, and stay
-            one step ahead of the competition.
+            By providing real-time data and insights, we&apos;re helping our
+            clients make better-informed decisions, optimize their operations,
+            and stay one step ahead of the competition.
           </p>
           <a
             href="#"
-            className="inline-flex items-center font-medium text-primary-600 hover:text-primary-800 dark:text-primary-500 dark:hover:text-primary-700"
+            className="inline-flex items-center font-medium text-green-600 hover:text-green-800 dark:text-green-500 dark:hover:text-green-700"
           >
             Learn more
             <svg

@@ -1,6 +1,12 @@
 import useSWR from 'swr';
 
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+export async function fetcher<JSON = any>(
+  input: RequestInfo,
+  init?: RequestInit,
+): Promise<JSON> {
+  const res = await fetch(input, init);
+  return res.json();
+}
 
 export interface OpenMeteoData {
   daily: {
@@ -32,6 +38,40 @@ export interface OpenMeteoData {
   generationtime_ms: number;
 }
 
+export interface PositionStack {
+  data: {
+    latitude: number;
+    longitude: number;
+    label: string;
+    name: string;
+    country: string;
+    region: string;
+    region_code: string;
+    type: string;
+    distance: number;
+    street: string;
+    number: string;
+    postal_code: string;
+    confidence: number;
+    administrative_area: string;
+    neighbourhood: string;
+    country_code: string;
+    map_url: string;
+  }[];
+}
+
+export type DailyTempData = {
+  time: string;
+  max: number;
+  min: number;
+};
+
+export type HourlyMeteoData = {
+  time: string;
+  direct_radiation: number;
+  relativehumidity_2m: number;
+};
+
 const constructOpenMeteoUrl = (
   lat: number,
   lon: number,
@@ -52,63 +92,112 @@ const constructPositionStackUrl = (lat: number, lon: number) => {
   return url + query;
 };
 
-const useLocation = (lat: number, lng: number) => {
-  const openMeteoUrl = constructOpenMeteoUrl(
-    lat,
-    lng,
-    '2023-01-01',
-    '2023-01-10',
-  );
-  const positionStackUrl = constructPositionStackUrl(lat, lng);
+const convertDateYYYYMMDD = (date: Date) => {
+  const offset = date.getTimezoneOffset();
+  const newDate = new Date(date.getTime() - offset * 60 * 1000);
+  return newDate.toISOString().split('T')[0];
+};
+
+const checkInvalidDate = (date: Date) => {
+  return date instanceof Date && !isNaN(date.getTime());
+};
+
+const useLocation = (
+  lat: number,
+  lng: number,
+  startDate: Date,
+  endDate: Date,
+) => {
+  const now = new Date();
+  const start = checkInvalidDate(startDate)
+    ? startDate
+    : new Date(now.getFullYear(), now.getMonth(), now.getDate() - 14);
+  const end = checkInvalidDate(endDate)
+    ? endDate
+    : new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+  const openMeteoUrl =
+    lat && lng
+      ? constructOpenMeteoUrl(
+          lat,
+          lng,
+          convertDateYYYYMMDD(start) as string,
+          convertDateYYYYMMDD(end) as string,
+        )
+      : null;
 
   const {
     data: openMeteoData,
     error: openMeteoError,
     isLoading,
-  } = useSWR<OpenMeteoData, string>(openMeteoUrl, fetcher);
-
-  console.log(positionStackUrl);
-
-  const { data: position } = useSWR(positionStackUrl, fetcher);
-
-  if (position?.data) {
-    console.log(
-      `[CONFIDENCE: ${
-        position?.data[0].confidence * 100
-      }%] You are located near ${position?.data[0]?.label}, in ${
-        position?.data[0]?.region
-      }. `,
-    );
-  }
+  } = useSWR<OpenMeteoData, Error>(openMeteoUrl, fetcher);
 
   const { daily, hourly } = openMeteoData || {};
 
-  const dailyTempData = [];
-  const hourlyMeteoData = [];
+  const dailyTempData: DailyTempData[] = [];
+  const hourlyMeteoData: HourlyMeteoData[] = [];
 
-  for (let i = 0; i < daily?.time?.length; i++) {
-    const intervalObj = {
-      time: daily?.time[i],
-      max: daily?.temperature_2m_max[i],
-      min: daily?.temperature_2m_min[i],
-    };
-    dailyTempData.push(intervalObj);
+  const dailyTempRaw = [];
+  const hourlyMeteoRaw = [];
+
+  if (daily?.time && daily?.time?.length > 0) {
+    for (let i = 0; i < daily?.time?.length; i++) {
+      const intervalObj = {
+        time: daily.time[i] as string,
+        max: daily.temperature_2m_max[i] as number,
+        min: daily.temperature_2m_min[i] as number,
+      };
+      dailyTempData.push(intervalObj);
+      dailyTempRaw.push([
+        daily?.temperature_2m_max[i],
+        daily?.temperature_2m_min[i],
+      ]);
+    }
   }
 
-  for (let i = 0; i < hourly?.time?.length; i++) {
-    const intervalObj = {
-      time: hourly.time[i],
-      direct_radiation: hourly?.direct_radiation[i],
-      relativehumidity_2m: hourly?.relativehumidity_2m[i],
-    };
-    hourlyMeteoData.push(intervalObj);
+  if (hourly && hourly?.time?.length > 0) {
+    for (let i = 0; i < hourly?.time?.length; i++) {
+      const intervalObj = {
+        time: hourly.time[i] as string,
+        direct_radiation: hourly?.direct_radiation[i] as number,
+        relativehumidity_2m: hourly?.relativehumidity_2m[i] as number,
+      };
+      hourlyMeteoData.push(intervalObj);
+      hourlyMeteoRaw.push([
+        hourly?.direct_radiation[i],
+        hourly?.relativehumidity_2m[i],
+      ]);
+    }
+  }
+
+  const { data: position } = useSWR<PositionStack, Error>(
+    () => openMeteoData && constructPositionStackUrl(lat, lng),
+    fetcher,
+  );
+
+  let location = 'Finding this place on Earth...';
+  if (
+    position &&
+    position.data &&
+    position.data.length > 0 &&
+    position.data[0]
+  ) {
+    location = `[CONFIDENCE: ${
+      (position.data[0].confidence as number) * 100
+    }%] You are located near ${position?.data[0]?.label}, in ${
+      position?.data[0]?.region
+    }. `;
+    console.log(location);
   }
 
   return {
     dailyTempData,
     hourlyMeteoData,
+    dailyTempRawData: dailyTempRaw,
+    hourlyMeteoRawData: hourlyMeteoRaw,
+    rawData: openMeteoData,
     openMeteoError,
     isLoading,
+    location,
   };
 };
 

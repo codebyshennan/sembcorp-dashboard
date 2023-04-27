@@ -1,12 +1,13 @@
 import type { NextPage } from 'next';
 import type { AppType, AppProps } from 'next/app';
-import type { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { DefaultLayout } from '~/components/layouts/DefaultLayout';
 import { trpc } from '~/utils/trpc';
 import './globals.css';
 import { SWRConfig } from 'swr';
 import { useCacheProvider } from '@piotr-cz/swr-idb-cache';
 import { ClerkProvider } from '@clerk/nextjs';
+import 'flowbite';
 // https://github.com/piotr-cz/swr-idb-cache
 
 export type NextPageWithLayout<

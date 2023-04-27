@@ -7,15 +7,15 @@ const LandingPageCTA = () => {
             Ready to transform the way you manage weather data?
           </h2>
           <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg">
-            Don't let weather data management slow you down any longer. With
-            real-time data and insights at your fingertips, you'll be able to
-            make better-informed decisions, optimize your operations, and stay
-            ahead of the competition. Contact us today to learn more and get
-            started.
+            Don&apos;t let weather data management slow you down any longer.
+            With real-time data and insights at your fingertips, you&apos;ll be
+            able to make better-informed decisions, optimize your operations,
+            and stay ahead of the competition. Contact us today to learn more
+            and get started.
           </p>
           <a
             href="#"
-            className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 focus:outline-none dark:focus:ring-primary-800"
           >
             Free trial for 30 days
           </a>

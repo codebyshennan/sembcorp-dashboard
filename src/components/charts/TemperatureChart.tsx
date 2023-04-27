@@ -9,8 +9,9 @@ import {
   Line,
   LineChart,
 } from 'recharts';
+import { DailyTempData } from '~/hooks/useLocation';
 
-const TemperatureChart = ({ data, xKey }) => {
+const TemperatureChart = ({ data }: { data: DailyTempData[] }) => {
   return (
     // <ResponsiveContainer width="100%" height="100%">
     <LineChart

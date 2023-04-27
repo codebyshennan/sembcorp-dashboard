@@ -5,6 +5,7 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/tailwind-datepicker-react/dist/**/*.js',
     './public/**/*.html',
   ],
   darkMode: 'class',

@@ -7,16 +7,16 @@ const LandingPageHero = () => {
             Revolutionize the way you manage weather data
           </h1>
           <p className="mb-6 max-w-2xl font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-            Don't let weather data management slow you down. Our
+            Don&apos;t let weather data management slow you down. Our
             state-of-the-art meteorological services streamline the process,
             providing you with real-time weather data and insights to help you
             make better-informed decisions. From weather forecasting to data
-            visualization, we've got you covered. Start revolutionizing the way
-            you manage weather data today.
+            visualization, we&apos;ve got you covered. Start revolutionizing the
+            way you manage weather data today.
           </p>
           <a
             href="#"
-            className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+            className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
           >
             Get started
             <svg
