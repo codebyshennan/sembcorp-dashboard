@@ -1,10 +1,6 @@
-// import { trpc } from '../utils/trpc';
 import { NextPageWithLayout } from '../_app';
 import { useEffect, useState } from 'react';
 import useLocation from '~/hooks/useLocation';
-import TemperatureChart from '~/components/charts/TemperatureChart';
-import MeteoHumidityChart from '~/components/charts/MeteoHumidityChart';
-import MeteoRadiationChart from '~/components/charts/MeteoRadiationChart';
 import Avatar from '~/components/nav/Avatar';
 import SideNav from '~/components/sidebar/SideNav';
 import SideNavToggle from '~/components/nav/SideNavToggle';
@@ -14,12 +10,14 @@ import { trpc } from '~/utils/trpc';
 import Map, { Marker } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import useDebounce from '~/hooks/useDebounce';
-import { Alert, Button, Modal, Spinner } from 'flowbite-react';
+import { Alert, Spinner } from 'flowbite-react';
 import { HiEye, HiInformationCircle } from 'react-icons/hi';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import JSONPretty from 'react-json-pretty';
 import 'react-json-pretty/themes/monikai.css';
+import TemperatureChartModal from '~/components/modals/TemperatureChartModal';
+import MeteoChartModal from '~/components/modals/MeteoChartModal';
+import ResponseJSONModal from '~/components/modals/ResponseJSONModal';
 
 const BASE_TEMPLATE =
   'Given the following api response from open-meteo, which provides some information abut meteorological data on a specific area and timezone, provide a succinct response with a table-based statistical analysis and some meteorological insights. This is to assist non-meteorologists to understand, evaluate and recognize patterns in the data:';
@@ -185,16 +183,11 @@ const IndexPage: NextPageWithLayout = () => {
               <div className="flex">
                 <button
                   type="button"
+                  onClick={() => setShowJSON(!showJSON)}
                   className="mr-2 inline-flex items-center rounded-lg bg-blue-700 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-800 dark:hover:bg-blue-900"
                 >
                   <HiEye className="-ml-0.5 mr-2 h-4 w-4" />
-                  View more
-                </button>
-                <button
-                  type="button"
-                  className="rounded-lg border border-blue-700 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-blue-700 hover:bg-blue-800 hover:text-white focus:ring-4 focus:ring-blue-300 dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
-                >
-                  Dismiss
+                  View Response
                 </button>
               </div>
             </>
@@ -206,63 +199,23 @@ const IndexPage: NextPageWithLayout = () => {
           </h3>
         </Alert>
 
-        <Modal
+        <TemperatureChartModal
           show={showTempChart}
-          size="7xl"
-          onClose={() => setShowTempChart(false)}
-        >
-          <Modal.Header>Temperature (C)</Modal.Header>
-          <Modal.Body>
-            <div className="flex items-center justify-center space-x-4 bg-[#343541] p-6 px-52 text-sm text-white">
-              <div className="flex w-full max-w-xl items-start justify-center space-x-4">
-                <div className="h-8 w-8 flex-none rounded-full bg-black/50">
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/2048px-ChatGPT_logo.svg.png"
-                    alt="chatgpt-logo"
-                  />
-                </div>
-                <TemperatureChart data={dailyTempData} />
-              </div>
-            </div>
-          </Modal.Body>
-          {/* go to next date */}
-          {/* <Modal.Footer>
-            <Button onClick={onClick}>I accept</Button>
-            <Button color="gray" onClick={onClick}>
-              Decline
-            </Button>
-          </Modal.Footer> */}
-        </Modal>
+          setShow={setShowTempChart}
+          data={dailyTempData}
+        />
 
-        <Modal
+        <MeteoChartModal
           show={showMeteoChart}
-          size="7xl"
-          onClose={() => setshowMeteoChart(false)}
-        >
-          <Modal.Header>Humidity & Radiation</Modal.Header>
-          <Modal.Body>
-            <div>
-              <MeteoHumidityChart data={hourlyMeteoData} />
-            </div>
-            <div>
-              <MeteoRadiationChart data={hourlyMeteoData} />
-            </div>
-          </Modal.Body>
-          {/* go to next date */}
-          <Modal.Footer>
-            <Button onClick={() => setshowMeteoChart(false)}>I accept</Button>
-            <Button color="gray" onClick={() => setshowMeteoChart(false)}>
-              Decline
-            </Button>
-          </Modal.Footer>
-        </Modal>
+          setShow={setshowMeteoChart}
+          data={hourlyMeteoData}
+        />
 
-        <Modal show={showJSON} size="7xl" onClose={() => setShowJSON(false)}>
-          <Modal.Header>Raw JSON Response</Modal.Header>
-          <Modal.Body>
-            <JSONPretty id="json-pretty" data={rawData}></JSONPretty>
-          </Modal.Body>
-        </Modal>
+        <ResponseJSONModal
+          show={showJSON}
+          setShow={setShowJSON}
+          data={rawData}
+        />
       </>
     );
   }
