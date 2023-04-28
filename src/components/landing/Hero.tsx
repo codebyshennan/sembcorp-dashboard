@@ -15,7 +15,7 @@ const LandingPageHero = () => {
             way you manage weather data today.
           </p>
           <a
-            href="#"
+            href="/app"
             className="inline-flex justify-center items-center py-3 px-5 mr-3 text-base font-medium text-center text-white rounded-lg bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
           >
             Get started
@@ -32,16 +32,10 @@ const LandingPageHero = () => {
               ></path>
             </svg>
           </a>
-          <a
-            href="#"
-            className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
-          >
-            Speak to Sales
-          </a>
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
           <img
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
+            src="https://img.freepik.com/premium-vector/weather-application-user-interface-ui-ux-elements-realistic-smartphone-with-weather-app-vector-illustration-concept_397674-587.jpg?w=2000"
             alt="mockup"
           />
         </div>

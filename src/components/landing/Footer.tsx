@@ -4,7 +4,7 @@ const LandingPageFooter = () => {
       <div className="mx-auto max-w-screen-xl">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com" className="flex items-center">
+            <a href="#" className="flex items-center">
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhnlg4_T3qowHYxaZkRgAv80zigg6JZkC90XWIxDsu1g&s"
                 className="mr-3 h-8"
@@ -22,16 +22,11 @@ const LandingPageFooter = () => {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <a href="https://flowbite.com" className="hover:underline">
-                    Flowbite
-                  </a>
-                </li>
-                <li>
                   <a
-                    href="https://tailwindcss.com/"
+                    href="https://sembcorpenergy.com.sg"
                     className="hover:underline"
                   >
-                    Tailwind CSS
+                    SembCorp
                   </a>
                 </li>
               </ul>
@@ -43,18 +38,18 @@ const LandingPageFooter = () => {
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
                   <a
-                    href="https://github.com/themesberg/flowbite"
+                    href="https://www.instagram.com/explore/tags/sembcorp/top/"
                     className="hover:underline "
                   >
-                    Github
+                    Instagram
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://discord.gg/4eeurUVvTy"
+                    href="https://www.sembcorp.com/en/media/events"
                     className="hover:underline"
                   >
-                    Discord
+                    Media
                   </a>
                 </li>
               </ul>
@@ -81,9 +76,12 @@ const LandingPageFooter = () => {
         <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2022{' '}
-            <a href="https://flowbite.com" className="hover:underline">
-              Flowbite™
+            © 2023{' '}
+            <a
+              href="https://github.com/codebyshennan/"
+              className="hover:underline"
+            >
+              Shen Nan
             </a>
             . All Rights Reserved.
           </span>

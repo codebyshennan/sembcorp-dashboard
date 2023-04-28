@@ -1,8 +1,13 @@
 import { useClerk } from '@clerk/clerk-react';
 import { Badge, Sidebar, Timeline } from 'flowbite-react';
 import DatePicker from 'react-datepicker';
-import { HiCalendar, HiChartPie, HiInbox, HiViewBoards } from 'react-icons/hi';
-// import Datepicker from 'tailwind-datepicker-react';
+import { HiCalendar } from 'react-icons/hi';
+import { FaTemperatureHigh } from 'react-icons/fa';
+import { TiWeatherPartlySunny } from 'react-icons/ti';
+import { AiOutlineCode } from 'react-icons/ai';
+import { VscSignOut } from 'react-icons/vsc';
+import { BsCalendar2Check } from 'react-icons/bs';
+import { MdOutlineDashboard } from 'react-icons/md';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -41,13 +46,12 @@ const SideNav = ({ controls }: { controls: Controls }) => {
       <Sidebar aria-label="Sidebar">
         <Sidebar.Items>
           <Sidebar.ItemGroup>
-            <Sidebar.Item href="#" icon={HiChartPie}>
+            <Sidebar.Item href="#" icon={MdOutlineDashboard} label="Pro">
               Dashboard
             </Sidebar.Item>
             <Sidebar.Item
               href="#"
-              icon={HiViewBoards}
-              label="Pro"
+              icon={FaTemperatureHigh}
               labelColor="alternative"
               onClick={() => controls.tempChart.setShow(true)}
             >
@@ -55,8 +59,7 @@ const SideNav = ({ controls }: { controls: Controls }) => {
             </Sidebar.Item>
             <Sidebar.Item
               href="#"
-              icon={HiInbox}
-              label="3"
+              icon={TiWeatherPartlySunny}
               onClick={() => controls.meteoChart.setShow(true)}
             >
               Meteorological Chart
@@ -79,7 +82,7 @@ const SideNav = ({ controls }: { controls: Controls }) => {
                   </Timeline.Content>
                 </Timeline.Item>
                 <Timeline.Item>
-                  <Timeline.Point icon={HiCalendar} />
+                  <Timeline.Point icon={BsCalendar2Check} />
                   <Timeline.Content>
                     <Timeline.Time> End </Timeline.Time>
                     <Timeline.Body>
@@ -97,16 +100,16 @@ const SideNav = ({ controls }: { controls: Controls }) => {
             </Sidebar.Item>
             <Sidebar.Item
               href="#"
-              icon={HiInbox}
-              label="3"
+              icon={AiOutlineCode}
+              label="</>"
               onClick={() => controls.showJSON.setShow(true)}
             >
-              API Response (JSON)
+              API Response
             </Sidebar.Item>
           </Sidebar.ItemGroup>
         </Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Sidebar.Item onClick={() => signOut()} icon={HiChartPie}>
+          <Sidebar.Item onClick={() => signOut()} icon={VscSignOut}>
             Sign Out
           </Sidebar.Item>
           <Sidebar.CTA>

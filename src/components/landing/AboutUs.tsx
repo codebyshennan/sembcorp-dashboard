@@ -24,13 +24,13 @@ const LandingPageAboutUs = () => {
         <div className="grid grid-cols-2 gap-4 mt-8">
           <img
             className="w-full rounded-lg"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png"
-            alt="office content 1"
+            src="https://stevenswater.com/wp-content/uploads/meteorology_bkgrd.jpg"
+            alt="SC 1"
           />
           <img
             className="mt-4 w-full rounded-lg lg:mt-10"
-            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png"
-            alt="office content 2"
+            src="https://www.usnews.com/dims4/USNEWS/236620a/2147483647/crop/2121x1415+0+0/resize/970x647/quality/85/?url=https%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F4f%2Ffd%2F54fe82284258a88f7afa1c0e93fb%2F210715-meteorologist-stock.jpg"
+            alt="SC 2"
           />
         </div>
       </div>
