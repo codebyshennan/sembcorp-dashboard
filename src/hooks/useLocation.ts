@@ -87,7 +87,7 @@ const constructOpenMeteoUrl = (
 };
 
 const constructPositionStackUrl = (lat: number, lon: number) => {
-  const url = 'http://api.positionstack.com/v1/reverse?';
+  const url = 'https://api.positionstack.com/v1/reverse?';
   const query = `access_key=${process.env.NEXT_PUBLIC_POSITION_STACK_TOKEN}&query=${lat},${lon}`;
   return url + query;
 };
