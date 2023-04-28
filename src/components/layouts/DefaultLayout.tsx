@@ -8,7 +8,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   return (
     <>
       <Head>
-        <title>Meteorological</title>
+        <title>Meteorological App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
