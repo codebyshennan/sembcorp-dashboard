@@ -1,10 +1,7 @@
 import { NextPageWithLayout } from '../_app';
 import { useEffect, useState } from 'react';
 import useLocation from '~/hooks/useLocation';
-import Avatar from '~/components/nav/Avatar';
 import SideNav from '~/components/sidebar/SideNav';
-import SideNavToggle from '~/components/nav/SideNavToggle';
-import BrandLogo from '~/components/nav/BrandLogo';
 import { useUser } from '@clerk/nextjs';
 import { trpc } from '~/utils/trpc';
 import Map, { Marker } from 'react-map-gl';
@@ -18,6 +15,7 @@ import 'react-json-pretty/themes/monikai.css';
 import TemperatureChartModal from '~/components/modals/TemperatureChartModal';
 import MeteoChartModal from '~/components/modals/MeteoChartModal';
 import ResponseJSONModal from '~/components/modals/ResponseJSONModal';
+import TopNav from '~/components/nav/TopNav';
 
 const BASE_TEMPLATE =
   'Given the following api response from open-meteo, which provides some information abut meteorological data on a specific area and timezone, provide a succinct response with a table-based statistical analysis and some meteorological insights. This is to assist non-meteorologists to understand, evaluate and recognize patterns in the data:';
@@ -29,6 +27,7 @@ const IndexPage: NextPageWithLayout = () => {
   const [lng, setLng] = useState(103.85);
   const [zoom, setZoom] = useState(9);
   const [loadingResponse, setLoadingResponse] = useState(false);
+  const [ai, toggleAi] = useState(true);
   const [messages, setMessages] = useState<string | null>(null);
 
   const [showTempChart, setShowTempChart] = useState(false);
@@ -93,17 +92,13 @@ const IndexPage: NextPageWithLayout = () => {
   } else {
     return (
       <>
-        <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-          <div className="px-3 py-3 lg:px-5 lg:pl-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center justify-start">
-                <SideNavToggle />
-                <BrandLogo />
-              </div>
-              <Avatar />
-            </div>
-          </div>
-        </nav>
+        <TopNav
+          controls={{
+            tempChart: { show: showTempChart, setShow: setShowTempChart },
+            meteoChart: { show: showMeteoChart, setShow: setshowMeteoChart },
+            showJSON: { show: showJSON, setShow: setShowJSON },
+          }}
+        />
 
         <SideNav
           controls={{
@@ -115,33 +110,33 @@ const IndexPage: NextPageWithLayout = () => {
           }}
         />
 
-        <div className="sm:ml-64 h-screen">
+        <div className="sm:ml-0 lg:ml-64 h-screen">
           <div>
-            <div className="grid grid-cols-3 gap-4 mb-4 absolute top-20 left-64 ml-5 z-10">
-              <div className="flex items-center justify-center h-24 rounded-xl bg-gray-50 dark:bg-gray-800 px-4">
-                <p className="text-md text-gray-400 dark:text-gray-500 ">
+            <div className="absolute sm:bottom-16 sm:left-2 md:grid md:grid-cols-3 md:gap-4 md:mb-4 md:top-20 lg:left-64 ml-5 z-10">
+              <div className="flex items-center justify-center md:h-12 rounded-xl sm:py-2 sm:mb-1 sm:rounded bg-gray-50 dark:bg-gray-800 px-4">
+                <p className="sm:text-xs text-md text-gray-400 dark:text-gray-500 ">
                   Long: {lng.toFixed(2)}
                 </p>
               </div>
-              <div className="flex items-center justify-center h-24 rounded-xl bg-gray-50 dark:bg-gray-800">
-                <p className="text-md text-gray-400 dark:text-gray-500">
+              <div className="flex items-center justify-center md:h-12 rounded-xl sm:py-2 sm:mb-1 sm:rounded bg-gray-50 dark:bg-gray-800">
+                <p className="sm:text-xs text-md text-gray-400 dark:text-gray-500">
                   Lat: {lat.toFixed(2)}
                 </p>
               </div>
-              <div className="flex items-center justify-center h-24 rounded-xl bg-gray-50 dark:bg-gray-800">
-                <p className="text-md text-gray-400 dark:text-gray-500">
+              <div className="flex items-center justify-center md:h-12 rounded-xl sm:py-2 sm:mb-1 sm:rounded bg-gray-50 dark:bg-gray-800">
+                <p className="sm:text-xs text-md text-gray-400 dark:text-gray-500">
                   Zoom: {zoom.toFixed(1)}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center justify-center h-12 gap-4 mb-4 absolute top-48 left-64 ml-5 z-10 rounded-xl bg-gray-50 dark:bg-gray-800 px-4">
-              <p className="text-md text-gray-400 dark:text-gray-500">
+            <div className="flex sm:left-2 items-center justify-center h-12 gap-4 mb-4 absolute sm:bottom-0 md:top-36 lg:left-64 ml-5 z-10 sm:rounded rounded-xl bg-gray-50 dark:bg-gray-800 px-4">
+              <p className="sm:text-xs text-md text-gray-400 dark:text-gray-500">
                 {location}
               </p>
             </div>
 
-            <div className="w-[calc(100vw-256px)] h-screen z-0">
+            <div className="sm:w-[screen] lg:w-[calc(100vw-256px)] h-screen z-0">
               <Map
                 initialViewState={{
                   longitude: lng,
@@ -165,14 +160,18 @@ const IndexPage: NextPageWithLayout = () => {
 
         <Alert
           color="info"
-          className="fixed bottom-0 right-0 m-5 max-w-lg"
+          className="fixed md:bottom-2 right-0 m-5 max-w-lg sm:bottom-16"
           additionalContent={
             <>
               <div className="mt-2 mb-4 text-sm text-blue-700 dark:text-blue-800">
                 {!loadingResponse ? (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {messages as string}
-                  </ReactMarkdown>
+                  ai ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {messages as string}
+                    </ReactMarkdown>
+                  ) : (
+                    'Toggle to show'
+                  )
                 ) : (
                   <div>
                     <Spinner aria-label="Thinking" />
@@ -188,6 +187,13 @@ const IndexPage: NextPageWithLayout = () => {
                 >
                   <HiEye className="-ml-0.5 mr-2 h-4 w-4" />
                   View Response
+                </button>
+                <button
+                  type="button"
+                  onClick={() => toggleAi(!ai)}
+                  className="rounded-lg border border-blue-700 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-blue-700 hover:bg-blue-800 hover:text-white focus:ring-4 focus:ring-blue-300 dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                >
+                  Toggle AI
                 </button>
               </div>
             </>

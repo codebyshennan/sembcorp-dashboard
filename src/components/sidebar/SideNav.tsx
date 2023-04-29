@@ -11,7 +11,7 @@ import { MdOutlineDashboard } from 'react-icons/md';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-interface Controls {
+export interface Controls {
   tempChart: {
     show: boolean;
     setShow: (show: boolean) => void;
@@ -38,12 +38,8 @@ const SideNav = ({ controls }: { controls: Controls }) => {
   const { signOut } = useClerk();
 
   return (
-    <aside
-      id="logo-sidebar"
-      className="fixed top-0 left-0 z-0 w-auto h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-      aria-label="Sidebar"
-    >
-      <Sidebar aria-label="Sidebar">
+    <aside className="fixed top-0 left-0 z-0 w-auto h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700">
+      <Sidebar aria-label="Sidebar" id="logo-sidebar">
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Sidebar.Item href="#" icon={MdOutlineDashboard} label="Pro">
@@ -53,14 +49,18 @@ const SideNav = ({ controls }: { controls: Controls }) => {
               href="#"
               icon={FaTemperatureHigh}
               labelColor="alternative"
-              onClick={() => controls.tempChart.setShow(true)}
+              onClick={() =>
+                controls.tempChart.setShow(!controls.tempChart.show)
+              }
             >
               Temperature Chart
             </Sidebar.Item>
             <Sidebar.Item
               href="#"
               icon={TiWeatherPartlySunny}
-              onClick={() => controls.meteoChart.setShow(true)}
+              onClick={() =>
+                controls.meteoChart.setShow(!controls.meteoChart.show)
+              }
             >
               Meteorological Chart
             </Sidebar.Item>
@@ -102,7 +102,7 @@ const SideNav = ({ controls }: { controls: Controls }) => {
               href="#"
               icon={AiOutlineCode}
               label="</>"
-              onClick={() => controls.showJSON.setShow(true)}
+              onClick={() => controls.showJSON.setShow(!controls.showJSON.show)}
             >
               API Response
             </Sidebar.Item>
