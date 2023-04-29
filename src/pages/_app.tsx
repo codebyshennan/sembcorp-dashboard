@@ -8,6 +8,7 @@ import { SWRConfig } from 'swr';
 import { useCacheProvider } from '@piotr-cz/swr-idb-cache';
 import { ClerkProvider } from '@clerk/nextjs';
 import 'flowbite';
+import { Analytics } from '@vercel/analytics/react';
 // https://github.com/piotr-cz/swr-idb-cache
 
 export type NextPageWithLayout<
@@ -38,6 +39,7 @@ const MyApp = (({ Component, pageProps }: AppPropsWithLayout) => {
     <ClerkProvider {...pageProps}>
       <SWRConfig value={{ provider: cacheProvider }}>
         <Component {...pageProps} />
+        <Analytics />
       </SWRConfig>
     </ClerkProvider>,
   );

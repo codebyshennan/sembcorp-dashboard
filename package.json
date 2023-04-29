@@ -24,6 +24,7 @@
     "@trpc/next": "^10.21.1",
     "@trpc/react-query": "^10.21.1",
     "@trpc/server": "^10.21.1",
+    "@vercel/analytics": "^1.0.0",
     "clsx": "^1.1.1",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
